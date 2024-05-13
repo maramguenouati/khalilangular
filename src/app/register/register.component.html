@@ -1,11 +1,9 @@
-
-
-  <body>
+<body>
     <div class="container" #container>
       <div class="forms-container">
         <div class="signin-signup">
           <!--sign in-->
-          <form action="#" class="sign-in-form"  [formGroup]="registerForm"  >
+          <form action="#" class="sign-in-form"  [formGroup]="signinForm"  >
             <img src="../../assets/man (2).png" class="man">
             <h2 class="title">Sign in</h2>
             <div class="input-field">
@@ -24,23 +22,50 @@
                 <i>Please enter your password</i>
               </small>
             </div>
-            <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+            <button type="submit" value="Login" class="btn solid" [disabled]="!signinForm.valid" class="btn w-100 main_btn" (click)="sign_in()">sign in</button>
+            
           </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
            <!--sign up--> 
@@ -50,7 +75,7 @@
             
             <div class="input-field">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="   First Name"  formControlName="firstName" />
+                <input type="text" placeholder="   First Name"  formControlName="firstName" style="margin-left: 10px;"/>
                 <small class="text-danger" *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)">
                   <i *ngIf="firstName?.errors?.['required']">
                       Please enter your First Name
@@ -60,7 +85,7 @@
               </div>
               <div class="input-field">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Last Name"  formControlName="lastName"/>
+                <input type="text" placeholder="Last Name"  formControlName="lastName" style="margin-left: 10px;"/>
                 <small class="text-danger" *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)">
                   <i *ngIf="lastName?.errors?.['required']">
                    <span>Please enter your last Name</span>   
@@ -71,7 +96,7 @@
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input type="text" placeholder="Username" formControlName="userName"/>
-              <small class="text-danger" *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)">
+              <small class="text-danger" *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)" >
                 <i *ngIf="userName?.errors?.['required']">
                  <span>Please enter your Username</span>   
                 </i>
@@ -99,41 +124,42 @@
             <div class="input-field">
               <i class="fas fa-lock"></i>
               <input type="password"  placeholder="Password" formControlName="password" />
-              <div class="form-group" *ngIf="password?.invalid && (password?.dirty || password?.touched)" style="position: absolute; bottom: -45px;">
-                  <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('minlength')  ? 'text-danger' : 'text-success'">
-                      <i >
-                          {{ password?.hasError('required') || password?.hasError('minlength') ? '' : '' }}
-                      </i> must be at least 8 characters!
-                  </label>
-                  <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasNumber')  ? 'text-danger' : 'text-success'">
-                      <i >
-                          {{ password?.hasError('required') || password?.hasError('hasNumber') ? '' : '' }}
-                      </i>
-                      must contain at least 1 number!
-                  </label>
-
-            
-                <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
-                    <i >
-                        {{ password?.hasError('required') || password?.hasError('hasCapitalCase') ? '' : '' }}
-                    </i>
-                    must contain at least 1 in Capital Case!
-                </label>
-                <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasSmallCase') ? 'text-danger' : 'text-success'">
-                    <i >
-                        {{ password?.hasError('required') || password?.hasError('hasSmallCase') ? '' : '' }}
-                    </i>
-                    must contain at least 1 Letter in Small Case!
-                </label>
-                <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
-                    <i >
-                        {{ password?.hasError('required') || password?.hasError('hasSpecialCharacters') ? '' : '' }}
-                    </i>must contain at least 1 Special Character!
-                </label>
-
-
+              
            </div>
-           </div>
+           <div class="form-group" *ngIf="password?.invalid && (password?.dirty || password?.touched)" style="position: relative; margin-bottom: 30px;">
+            <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('minlength')  ? 'text-danger' : 'text-success'">
+                <i >
+                    {{ password?.hasError('required') || password?.hasError('minlength') ? '' : '' }}
+                </i> Must be at least 8 characters!
+            </label>
+            <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                <i >
+                    {{ password?.hasError('required') || password?.hasError('hasNumber') ? '' : '' }}
+                </i>
+                Must contain at least 1 number!
+            </label>
+
+      
+          <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+              <i >
+                  {{ password?.hasError('required') || password?.hasError('hasCapitalCase') ? '' : '' }}
+              </i>
+              Must contain at least 1 in Capital Case!
+          </label>
+          <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasSmallCase') ? 'text-danger' : 'text-success'">
+              <i >
+                  {{ password?.hasError('required') || password?.hasError('hasSmallCase') ? '' : '' }}
+              </i>
+              Must contain at least 1 Letter in Small Case!
+          </label>
+          <label class="col_invalid_msg" [ngClass]="password?.hasError('required') || password?.hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+              <i >
+                  {{ password?.hasError('required') || password?.hasError('hasSpecialCharacters') ? '' : '' }}
+              </i>Must contain at least 1 Special Character!
+          </label>
+
+
+     </div> 
 
 
 
@@ -161,7 +187,7 @@
 
 
 
-            <input type="submit" class="btn" value="Sign up"  [disabled]="!registerForm.valid" (click)="sign_up()" />
+            <input type="submit" class="btn"  [disabled]="registerForm.invalid"  (click)="sign_up()" />
           
            
           </form>
@@ -189,7 +215,7 @@
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
               laboriosam ad deleniti.
             </p>
-            <button class="btn transparent" #signInBtn>
+            <button class="btn transparent" #signInBtn >
               Sign in
             </button>
           </div>
@@ -199,4 +225,3 @@
     </div>
 
   </body>
-

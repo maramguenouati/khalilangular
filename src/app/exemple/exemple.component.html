@@ -1,0 +1,21 @@
+<table class="table table-dark">
+<thead>
+    <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>quantity</th>
+    <th>status</th>
+    <th>action</th>
+</tr>
+</thead>
+<tbody>
+    <tr *ngFor="let item of Items ">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.quantity}} <p *ngIf="item.id==2">gggggg</p></td>
+        <td>{{item.available ? 'Available':'not Available'}}</td>
+        <td><button class="btn btn-secondary" (click)="itemClick(item)">clic</button></td>
+
+    </tr>
+</tbody>
+</table>

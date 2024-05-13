@@ -18,6 +18,7 @@ export class RegisterComponent implements AfterViewInit , OnInit  {
 
 
   registerForm!: FormGroup;
+  signinForm!: FormGroup;
   constructor(
     private _router: Router,
     private _fb: FormBuilder,
@@ -43,16 +44,31 @@ export class RegisterComponent implements AfterViewInit , OnInit  {
 
   ngOnInit(): void {
     this.buildRegisterForm();
+    this.buildSignInForm();
   }
-  
+  buildSignInForm(){
+    this.signinForm = this._fb.group({
+      userNamein : ['', [Validators.required, ]],
+      Passwordin: ['', [Validators.required]],
+
+  }
+)
+}
+get Passwordin() {
+  return this.registerForm.get('Passwordin');
+}
+
+get userNamein() {
+  return this.registerForm.get('userNamein');
+}
   buildRegisterForm() {
     this.registerForm = this._fb.group({
       firstName : ['', [Validators.required ]],
       lastName : ['', [Validators.required, ]],
       userName : ['', [Validators.required, ]],
-      userNamein : ['', [Validators.required, ]],
+    
       email: ['', [Validators.required, Validators.email]],
-      Passwordin: ['', [Validators.required]],
+      
       password:['' ,
       [
         Validators.compose(
@@ -109,17 +125,11 @@ export class RegisterComponent implements AfterViewInit , OnInit  {
   get confirm_password() {
     return this.registerForm.get('confirm_password');
   }
-  get Passwordin() {
-    return this.registerForm.get('Passwordin');
-  }
-
-  get userNamein() {
-    return this.registerForm.get('userNamein');
-  }
+ 
    // form validation
    isFormValid: boolean = false;
    resolved(captchaResponse: string) {
-     console.log(`Resolved captcha with response: ${captchaResponse}`);
+     console.log('Resolved captcha with response: ${captchaResponse}');
  
      if (captchaResponse != null) {
        this.isFormValid = true;
@@ -134,7 +144,10 @@ export class RegisterComponent implements AfterViewInit , OnInit  {
       this._router.navigate(['/home']);
     }
   }
+  sign_in() {
 
+   
+  }
 areFieldsFilled(): boolean {
     
     return !!this.registerForm.get('name')?.value &&
